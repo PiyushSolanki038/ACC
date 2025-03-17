@@ -1,0 +1,72 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  /* Light theme variables */
+  --primary: #4f46e5;
+  --primary-hover: #4338ca;
+  --background: #f3f4f6;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+  --text: #111827;
+  --text-secondary: #6b7280;
+  --hover: #f9fafb;
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --input-text: #111827;
+  --input-placeholder: #9ca3af;
+  --error: #ef4444;
+  --success: #10b981;
+  --warning: #f59e0b;
+}
+
+.dark {
+  /* Dark theme variables */
+  --primary: #6366f1;
+  --primary-hover: #818cf8;
+  --background: #111827;
+  --surface: #1f2937;
+  --border: #374151;
+  --text: #f9fafb;
+  --text-secondary: #9ca3af;
+  --hover: #374151;
+  --input-bg: #1f2937;
+  --input-border: #4b5563;
+  --input-text: #f9fafb;
+  --input-placeholder: #6b7280;
+  --error: #f87171;
+  --success: #34d399;
+  --warning: #fbbf24;
+}
+
+/* Base styles */
+body {
+  background-color: var(--background);
+  color: var(--text);
+}
+
+/* Common component styles */
+.btn-primary {
+  background-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-hover);
+}
+
+.input {
+  background-color: var(--input-bg);
+  border-color: var(--input-border);
+  color: var(--input-text);
+}
+
+.input::placeholder {
+  color: var(--input-placeholder);
+}
+
+/* Transition for theme changes */
+* {
+  transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+} 
