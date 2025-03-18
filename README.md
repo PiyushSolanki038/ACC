@@ -1,3 +1,9 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+# ACC
+=======
+>>>>>>> c4b8260 (Initial commit)
 # Accounting and Billing Web Application
 
 A modern web application for managing accounting and billing operations. Built with React, TypeScript, and Tailwind CSS.
@@ -71,4 +77,9 @@ src/
 
 ## License
 
+<<<<<<< HEAD
 This project is licensed under the MIT License - see the LICENSE file for details. 
+=======
+This project is licensed under the MIT License - see the LICENSE file for details. 
+>>>>>>> b6b2c97 (Initial commit)
+>>>>>>> c4b8260 (Initial commit)

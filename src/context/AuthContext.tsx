@@ -1,5 +1,9 @@
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
+<<<<<<< HEAD
 import { AuthState, User, LoginCredentials, PasswordResetRequest, PasswordReset } from '../types/user';
+=======
+import { AuthState, User, LoginCredentials, PasswordResetRequest, PasswordReset, UserRole } from '../types/user';
+>>>>>>> c4b8260 (Initial commit)
 
 type AuthAction =
   | { type: 'LOGIN_START' }
@@ -76,6 +80,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     try {
       dispatch({ type: 'LOGIN_START' });
       
+<<<<<<< HEAD
       const response = await fetch('http://localhost:5000/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -92,6 +97,35 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       localStorage.setItem('user', JSON.stringify(user));
       
       dispatch({ type: 'LOGIN_SUCCESS', payload: user });
+=======
+      // For development, simulate a successful login
+      const mockUser: User = {
+        id: '1',
+        email: credentials.email,
+        name: 'Test User',
+        role: 'owner' as UserRole,
+        createdAt: new Date().toISOString(),
+        lastLogin: new Date().toISOString(),
+      };
+
+      // In production, replace with actual API call
+      // const response = await fetch('http://localhost:5000/api/auth/login', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(credentials),
+      // });
+
+      // if (!response.ok) {
+      //   const error = await response.json();
+      //   throw new Error(error.message || 'Invalid credentials');
+      // }
+
+      // const user = await response.json();
+      localStorage.setItem('authToken', 'mock-token');
+      localStorage.setItem('user', JSON.stringify(mockUser));
+      
+      dispatch({ type: 'LOGIN_SUCCESS', payload: mockUser });
+>>>>>>> c4b8260 (Initial commit)
     } catch (error) {
       dispatch({ type: 'LOGIN_FAILURE', payload: (error as Error).message });
       throw error;

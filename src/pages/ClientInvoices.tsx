@@ -20,6 +20,11 @@ interface Client {
   status: 'Active' | 'Inactive';
   totalInvoices: number;
   totalAmount: string;
+<<<<<<< HEAD
+=======
+  unpaidBills: number;
+  overdueAmount: string;
+>>>>>>> c4b8260 (Initial commit)
 }
 
 const ClientInvoices: React.FC = () => {
@@ -72,20 +77,33 @@ const ClientInvoices: React.FC = () => {
         payload: {
           ...editingClient,
           ...clientFormData,
+<<<<<<< HEAD
         },
       });
       handleCloseClientModal();
+=======
+          unpaidBills: editingClient.unpaidBills || 0,
+          overdueAmount: editingClient.overdueAmount || '₹0.00'
+        },
+      });
+>>>>>>> c4b8260 (Initial commit)
     } else {
       const newClient: Client = {
         id: `CLT${String(state.clients.length + 1).padStart(3, '0')}`,
         ...clientFormData,
         totalInvoices: 0,
         totalAmount: '₹0.00',
+<<<<<<< HEAD
+=======
+        unpaidBills: 0,
+        overdueAmount: '₹0.00'
+>>>>>>> c4b8260 (Initial commit)
       };
       dispatch({
         type: 'ADD_CLIENT',
         payload: newClient,
       });
+<<<<<<< HEAD
       handleCloseClientModal();
       
       // Set the selected client and open invoice modal
@@ -96,6 +114,10 @@ const ClientInvoices: React.FC = () => {
       }));
       setIsInvoiceModalOpen(true);
     }
+=======
+    }
+    handleCloseClientModal();
+>>>>>>> c4b8260 (Initial commit)
   };
 
   const handleEditClient = (client: Client) => {

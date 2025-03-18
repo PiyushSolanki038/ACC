@@ -34,9 +34,19 @@ const darkTheme: ThemeColors = {
   hover: '#2d3748'
 };
 
+<<<<<<< HEAD
 export const getSystemTheme = (): 'light' | 'dark' => {
   if (typeof window === 'undefined') return 'light';
   return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+=======
+export type Theme = 'light' | 'dark' | 'system';
+
+export const getSystemTheme = (): Theme => {
+  if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+    return 'dark';
+  }
+  return 'light';
+>>>>>>> c4b8260 (Initial commit)
 };
 
 const applyThemeVariables = (colors: ThemeColors) => {
@@ -46,6 +56,7 @@ const applyThemeVariables = (colors: ThemeColors) => {
   });
 };
 
+<<<<<<< HEAD
 export const applyTheme = (theme: 'light' | 'dark' | 'system'): void => {
   const root = window.document.documentElement;
   const activeTheme = theme === 'system' ? getSystemTheme() : theme;
@@ -55,11 +66,25 @@ export const applyTheme = (theme: 'light' | 'dark' | 'system'): void => {
   
   // Apply theme variables
   applyThemeVariables(activeTheme === 'dark' ? darkTheme : lightTheme);
+=======
+export const applyTheme = (theme: Theme) => {
+  const root = document.documentElement;
+  
+  if (theme === 'dark' || (theme === 'system' && getSystemTheme() === 'dark')) {
+    root.classList.add('dark');
+  } else {
+    root.classList.remove('dark');
+  }
+  
+  // Apply theme variables
+  applyThemeVariables(theme === 'dark' ? darkTheme : lightTheme);
+>>>>>>> c4b8260 (Initial commit)
   
   // Store theme preference
   localStorage.setItem('theme', theme);
 };
 
+<<<<<<< HEAD
 export const initializeTheme = (): void => {
   const savedTheme = localStorage.getItem('theme') as 'light' | 'dark' | 'system' | null;
   const theme = savedTheme || 'system';
@@ -74,4 +99,18 @@ export const initializeTheme = (): void => {
   };
   
   mediaQuery.addEventListener('change', handleChange);
+=======
+export const initializeTheme = (defaultTheme: Theme = 'light') => {
+  const savedTheme = localStorage.getItem('theme') as Theme;
+  const theme = savedTheme || defaultTheme;
+  
+  applyTheme(theme);
+  
+  // Listen for system theme changes
+  window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+    if (theme === 'system') {
+      applyTheme(e.matches ? 'dark' : 'light');
+    }
+  });
+>>>>>>> c4b8260 (Initial commit)
 }; 

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { createContext, useContext, useReducer, ReactNode, useEffect } from 'react';
+=======
+import React, { createContext, useContext, useReducer, ReactNode, useEffect, useState } from 'react';
+>>>>>>> c4b8260 (Initial commit)
 
 // Types
 interface Product {
@@ -63,6 +67,11 @@ interface Client {
   status: 'Active' | 'Inactive';
   totalInvoices: number;
   totalAmount: string;
+<<<<<<< HEAD
+=======
+  unpaidBills: number;
+  overdueAmount: string;
+>>>>>>> c4b8260 (Initial commit)
 }
 
 interface Expense {
@@ -122,14 +131,20 @@ export interface Settings {
     email: string;
     website: string;
     currency: string;
+<<<<<<< HEAD
     language: string;
+=======
+>>>>>>> c4b8260 (Initial commit)
   };
   financial: {
     gstRate: number;
     cgstRate: number;
     sgstRate: number;
     igstRate: number;
+<<<<<<< HEAD
     defaultTaxRate: number;
+=======
+>>>>>>> c4b8260 (Initial commit)
     financialYearStart: string;
     financialYearEnd: string;
   };
@@ -137,6 +152,7 @@ export interface Settings {
     prefix: string;
     startingNumber: number;
     termsAndConditions: string;
+<<<<<<< HEAD
     dueDatePeriod: number;
     showLogo: boolean;
     defaultTemplate: string;
@@ -156,6 +172,34 @@ export interface Settings {
 }
 
 interface AppState {
+=======
+    template: string;
+    showLogo: boolean;
+  };
+  notifications: {
+    emailNotifications: boolean;
+    paymentReminders: boolean;
+    reminderDays: number;
+  };
+  backup: {
+    autoBackup: boolean;
+    backupFrequency: string;
+    backupTime: string;
+    retentionDays: number;
+    backupLocation: string;
+    backupFormat: 'json' | 'csv' | 'excel';
+  };
+}
+
+// Add User interface
+interface User {
+  id: string;
+  email: string;
+  name?: string;
+}
+
+export interface AppState {
+>>>>>>> c4b8260 (Initial commit)
   invoices: Invoice[];
   clients: Client[];
   expenses: Expense[];
@@ -164,6 +208,10 @@ interface AppState {
   bills: Bill[];
   workers: Worker[];
   settings: Settings;
+<<<<<<< HEAD
+=======
+  user: User | null;  // Add user to AppState
+>>>>>>> c4b8260 (Initial commit)
 }
 
 export type AppAction =
@@ -189,13 +237,21 @@ export type AppAction =
   | { type: 'UPDATE_WORKER'; payload: Worker }
   | { type: 'DELETE_WORKER'; payload: string }
   | { type: 'MARK_ATTENDANCE'; payload: { workerId: string; attendance: Worker['attendance'][0] } }
+<<<<<<< HEAD
   | { type: 'UPDATE_SETTINGS'; payload: Settings };
+=======
+  | { type: 'UPDATE_SETTINGS'; payload: Settings }
+  | { type: 'SET_USER'; payload: User }
+  | { type: 'UPDATE_USER'; payload: User }
+  | { type: 'CLEAR_USER' };
+>>>>>>> c4b8260 (Initial commit)
 
 // Load initial state from localStorage or use default state
 const loadInitialState = (): AppState => {
   const savedState = localStorage.getItem('appState');
   if (savedState) {
     const parsedState = JSON.parse(savedState);
+<<<<<<< HEAD
     // Ensure settings exist in the saved state
     return {
       ...parsedState,
@@ -239,6 +295,22 @@ const loadInitialState = (): AppState => {
           compactMode: false,
         },
       },
+=======
+    return {
+      ...parsedState,
+      settings: {
+        ...parsedState.settings,
+        backup: parsedState.settings?.backup || {
+          autoBackup: true,
+          backupFrequency: 'daily',
+          backupTime: '00:00',
+          retentionDays: 30,
+          backupLocation: '',
+          backupFormat: 'json',
+        },
+      },
+      user: parsedState.user || null,
+>>>>>>> c4b8260 (Initial commit)
     };
   }
   return {
@@ -252,6 +324,11 @@ const loadInitialState = (): AppState => {
         status: 'Active',
         totalInvoices: 2,
         totalAmount: '$1,500.00',
+<<<<<<< HEAD
+=======
+        unpaidBills: 0,
+        overdueAmount: '$0.00',
+>>>>>>> c4b8260 (Initial commit)
       },
       {
         id: 'CLT002',
@@ -261,6 +338,11 @@ const loadInitialState = (): AppState => {
         status: 'Active',
         totalInvoices: 1,
         totalAmount: '$750.00',
+<<<<<<< HEAD
+=======
+        unpaidBills: 0,
+        overdueAmount: '$0.00',
+>>>>>>> c4b8260 (Initial commit)
       },
     ],
     expenses: [],
@@ -292,6 +374,7 @@ const loadInitialState = (): AppState => {
     ],
     purchaseOrders: [],
     bills: [],
+<<<<<<< HEAD
     workers: [
       {
         id: 'WRK001',
@@ -330,6 +413,9 @@ const loadInitialState = (): AppState => {
         ]
       }
     ],
+=======
+    workers: [],
+>>>>>>> c4b8260 (Initial commit)
     settings: {
       general: {
         companyName: '',
@@ -338,14 +424,20 @@ const loadInitialState = (): AppState => {
         email: '',
         website: '',
         currency: 'INR',
+<<<<<<< HEAD
         language: 'en',
+=======
+>>>>>>> c4b8260 (Initial commit)
       },
       financial: {
         gstRate: 18,
         cgstRate: 9,
         sgstRate: 9,
         igstRate: 18,
+<<<<<<< HEAD
         defaultTaxRate: 18,
+=======
+>>>>>>> c4b8260 (Initial commit)
         financialYearStart: '04-01',
         financialYearEnd: '03-31',
       },
@@ -353,6 +445,7 @@ const loadInitialState = (): AppState => {
         prefix: 'INV',
         startingNumber: 1,
         termsAndConditions: '',
+<<<<<<< HEAD
         dueDatePeriod: 30,
         showLogo: true,
         defaultTemplate: 'standard',
@@ -370,6 +463,26 @@ const loadInitialState = (): AppState => {
         compactMode: false,
       },
     },
+=======
+        template: 'standard',
+        showLogo: true,
+      },
+      notifications: {
+        emailNotifications: true,
+        paymentReminders: true,
+        reminderDays: 3,
+      },
+      backup: {
+        autoBackup: true,
+        backupFrequency: 'daily',
+        backupTime: '00:00',
+        retentionDays: 30,
+        backupLocation: '',
+        backupFormat: 'json',
+      },
+    },
+    user: null,
+>>>>>>> c4b8260 (Initial commit)
   };
 };
 
@@ -518,11 +631,30 @@ export const appReducer = (state: AppState, action: AppAction): AppState => {
         ...state,
         settings: action.payload,
       };
+<<<<<<< HEAD
+=======
+    case 'SET_USER':
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        user: action.payload,
+      };
+    case 'CLEAR_USER':
+      return {
+        ...state,
+        user: null,
+      };
+>>>>>>> c4b8260 (Initial commit)
     default:
       return state;
   }
 };
 
+<<<<<<< HEAD
 // Add theme context and hook
 interface ThemeContextType {
   theme: string;
@@ -543,12 +675,51 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
   const [theme, setTheme] = React.useState<'light' | 'dark' | 'system'>(
     state.settings?.appearance?.theme || 'light'
   );
+=======
+// Create context
+const AppContext = createContext<{
+  state: AppState;
+  dispatch: React.Dispatch<AppAction>;
+} | null>(null);
+
+// Create theme context
+const ThemeContext = createContext<{
+  theme: 'light' | 'dark';
+  setTheme: (theme: 'light' | 'dark') => void;
+} | null>(null);
+
+// Create hooks
+export const useApp = () => {
+  const context = useContext(AppContext);
+  if (!context) {
+    throw new Error('useApp must be used within an AppProvider');
+  }
+  return context;
+};
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error('useTheme must be used within an AppProvider');
+  }
+  return context;
+};
+
+// Create provider component
+export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [state, dispatch] = useReducer(appReducer, loadInitialState());
+  const [theme, setTheme] = useState<'light' | 'dark'>(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return (savedTheme as 'light' | 'dark') || 'light';
+  });
+>>>>>>> c4b8260 (Initial commit)
 
   // Save state to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('appState', JSON.stringify(state));
   }, [state]);
 
+<<<<<<< HEAD
   // Handle theme changes
   useEffect(() => {
     const root = window.document.documentElement;
@@ -570,6 +741,12 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
 
     mediaQuery.addEventListener('change', handleChange);
     return () => mediaQuery.removeEventListener('change', handleChange);
+=======
+  // Save theme to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('theme', theme);
+    document.documentElement.classList.toggle('dark', theme === 'dark');
+>>>>>>> c4b8260 (Initial commit)
   }, [theme]);
 
   return (
@@ -579,6 +756,7 @@ export const AppProvider: React.FC<{ children: ReactNode }> = ({ children }) => 
       </ThemeContext.Provider>
     </AppContext.Provider>
   );
+<<<<<<< HEAD
 };
 
 // Custom hook
@@ -596,4 +774,6 @@ export const useTheme = () => {
     throw new Error('useTheme must be used within an AppProvider');
   }
   return context;
+=======
+>>>>>>> c4b8260 (Initial commit)
 }; 

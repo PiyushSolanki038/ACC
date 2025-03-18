@@ -8,7 +8,12 @@ import {
   EnvelopeIcon, 
   DocumentTextIcon,
   DocumentDuplicateIcon,
+<<<<<<< HEAD
   CreditCardIcon
+=======
+  CreditCardIcon,
+  ShareIcon
+>>>>>>> c4b8260 (Initial commit)
 } from '@heroicons/react/24/outline';
 import { useApp } from '../context/AppContext';
 import FormModal from '../components/FormModal';
@@ -22,6 +27,11 @@ interface Client {
   status: 'Active' | 'Inactive';
   totalInvoices: number;
   totalAmount: string;
+<<<<<<< HEAD
+=======
+  unpaidBills: number;
+  overdueAmount: string;
+>>>>>>> c4b8260 (Initial commit)
 }
 
 const Clients: React.FC = () => {
@@ -30,12 +40,27 @@ const Clients: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const [searchQuery, setSearchQuery] = useState('');
+<<<<<<< HEAD
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     status: 'Active' as 'Active' | 'Inactive',
   });
+=======
+  const [formData, setFormData] = useState<Omit<Client, 'id'>>({
+    name: '',
+    email: '',
+    phone: '',
+    status: 'Active',
+    totalInvoices: 0,
+    totalAmount: '₹0.00',
+    unpaidBills: 0,
+    overdueAmount: '₹0.00'
+  });
+  const [shareModalOpen, setShareModalOpen] = useState(false);
+  const [shareMessage, setShareMessage] = useState('');
+>>>>>>> c4b8260 (Initial commit)
 
   // Filter clients based on search query
   const filteredClients = state.clients.filter(client =>
@@ -51,6 +76,7 @@ const Clients: React.FC = () => {
         type: 'UPDATE_CLIENT',
         payload: {
           ...editingClient,
+<<<<<<< HEAD
           ...formData,
         },
       });
@@ -68,6 +94,21 @@ const Clients: React.FC = () => {
       });
       handleCloseModal();
     }
+=======
+          ...formData
+        }
+      });
+    } else {
+      dispatch({
+        type: 'ADD_CLIENT',
+        payload: {
+          id: `CLT${String(state.clients.length + 1).padStart(3, '0')}`,
+          ...formData
+        }
+      });
+    }
+    handleCloseModal();
+>>>>>>> c4b8260 (Initial commit)
   };
 
   const handleEdit = (client: Client) => {
@@ -77,6 +118,13 @@ const Clients: React.FC = () => {
       email: client.email,
       phone: client.phone,
       status: client.status,
+<<<<<<< HEAD
+=======
+      totalInvoices: client.totalInvoices,
+      totalAmount: client.totalAmount,
+      unpaidBills: client.unpaidBills || 0,
+      overdueAmount: client.overdueAmount || '₹0.00'
+>>>>>>> c4b8260 (Initial commit)
     });
     setIsModalOpen(true);
   };
@@ -95,9 +143,39 @@ const Clients: React.FC = () => {
       email: '',
       phone: '',
       status: 'Active',
+<<<<<<< HEAD
     });
   };
 
+=======
+      totalInvoices: 0,
+      totalAmount: '₹0.00',
+      unpaidBills: 0,
+      overdueAmount: '₹0.00'
+    });
+  };
+
+  const handleShare = (client: Client, type: 'bills' | 'unpaid') => {
+    let message = '';
+    
+    if (type === 'bills') {
+      message = `Dear ${client.name},\n\nYour payment status:\nTotal Bills: ${client.totalInvoices}\nTotal Amount: ${client.totalAmount}\n\nThank you for your business!`;
+    } else {
+      message = `Dear ${client.name},\n\nPayment Reminder:\nYou have ${client.unpaidBills} unpaid bills\nOverdue Amount: ${client.overdueAmount}\n\nPlease settle your payment at your earliest convenience.`;
+    }
+
+    if (navigator.share) {
+      navigator.share({
+        title: 'Payment Status',
+        text: message,
+      }).catch(console.error);
+    } else {
+      setShareModalOpen(true);
+      setShareMessage(message);
+    }
+  };
+
+>>>>>>> c4b8260 (Initial commit)
   return (
     <div>
       <div className="sm:flex sm:items-center">
@@ -158,6 +236,7 @@ const Clients: React.FC = () => {
                   <p className="text-gray-500">Total Amount</p>
                   <p className="mt-1 font-medium text-gray-900">{client.totalAmount}</p>
                 </div>
+<<<<<<< HEAD
               </div>
             </div>
 
@@ -190,6 +269,36 @@ const Clients: React.FC = () => {
               >
                 <TrashIcon className="h-5 w-5" />
               </button>
+=======
+                <div>
+                  <p className="text-gray-500">Unpaid Bills</p>
+                  <p className="mt-1 font-medium text-red-600">{client.unpaidBills}</p>
+                </div>
+                <div>
+                  <p className="text-gray-500">Overdue Amount</p>
+                  <p className="mt-1 font-medium text-red-600">{client.overdueAmount}</p>
+                </div>
+              </div>
+            </div>
+
+            <div className="mt-4 flex justify-end space-x-2">
+              <button
+                onClick={() => handleShare(client, 'bills')}
+                className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+              >
+                <ShareIcon className="h-4 w-4 mr-1" />
+                Share Bills
+              </button>
+              {client.unpaidBills > 0 && (
+                <button
+                  onClick={() => handleShare(client, 'unpaid')}
+                  className="inline-flex items-center px-3 py-1.5 border border-transparent text-xs font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+                >
+                  <ShareIcon className="h-4 w-4 mr-1" />
+                  Share Unpaid
+                </button>
+              )}
+>>>>>>> c4b8260 (Initial commit)
             </div>
           </div>
         ))}
@@ -265,6 +374,31 @@ const Clients: React.FC = () => {
           </div>
         </form>
       </FormModal>
+<<<<<<< HEAD
+=======
+
+      {/* Share Modal */}
+      {shareModalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-md w-full">
+            <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Share Message</h3>
+            <div className="space-y-4">
+              <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded">
+                <p className="text-gray-900 dark:text-white whitespace-pre-line">{shareMessage}</p>
+              </div>
+              <div className="flex justify-end space-x-3">
+                <button
+                  onClick={() => setShareModalOpen(false)}
+                  className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-md hover:bg-gray-200 dark:hover:bg-gray-600"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+>>>>>>> c4b8260 (Initial commit)
     </div>
   );
 };
